@@ -404,3 +404,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Mac Files
+.DS_Store
+
+# F1-Data-Analysis
+Kaggle-Data/

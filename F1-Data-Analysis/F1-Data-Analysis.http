@@ -1,0 +1,6 @@
+@F1_Data_Analysis_HostAddress = http://localhost:5196
+
+GET {{F1_Data_Analysis_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

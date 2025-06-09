@@ -1,8 +1,14 @@
 using System;
+using Models;
 
 namespace F1_Data_Analysis.Models;
 
-public class CsvParser
+public interface IFileParser
+{
+    public void FetchContent(LapTimes lapTime);
+}
+
+public class CsvParser : IFileParser
 {
     private readonly string LapTimesPath = "Kaggle-Data/lap_times.csv";
     private readonly int N_LINE_FOR_HEADER = 1;

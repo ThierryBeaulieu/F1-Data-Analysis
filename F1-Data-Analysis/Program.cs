@@ -1,3 +1,5 @@
+using F1_Data_Analysis.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var parser = new CsvParser();
+var lapTime = new LapTimes();
+parser.FetchContent(lapTime);
+
+Console.WriteLine(lapTime.GetLapTimeByIndex(100));
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

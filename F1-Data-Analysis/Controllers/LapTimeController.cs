@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Models;
 
-
 namespace backend.Controllers
 {
     [Route("api/[controller]")]

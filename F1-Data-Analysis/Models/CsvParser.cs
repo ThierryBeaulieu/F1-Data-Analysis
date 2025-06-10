@@ -10,7 +10,8 @@ public interface IFileParser
 
 public class CsvParser : IFileParser
 {
-    private readonly string LapTimesPath = "Kaggle-Data/lap_times.csv";
+    // todo, make this more flexibles
+    private readonly string LapTimesPath = "/Users/thierry/Desktop/F1-Data-Analysis/F1-Data-Analysis/Kaggle-Data/lap_times.csv";
     private readonly int N_LINE_FOR_HEADER = 1;
 
     public void FetchContent(LapTimes lapTime)

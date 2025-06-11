@@ -5,12 +5,12 @@ namespace Models
 {
     public class LapTime
     {
-        public string? raceId;
-        public string? driverId;
-        public string? lap;
-        public string? position;
-        public string? time;
-        public string? milliseconds;
+        public string? raceId { get; set; } = "";
+        public string? driverId { get; set; } = "";
+        public string? lap { get; set; } = "";
+        public string? position { get; set; } = "";
+        public string? time { get; set; } = "";
+        public string? milliseconds { get; set; } = "";
     }
 
     public class LapTimes

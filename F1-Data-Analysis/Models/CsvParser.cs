@@ -1,4 +1,5 @@
 using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Models;
 
 namespace F1_Data_Analysis.Models;
@@ -8,15 +9,17 @@ public interface IFileParser
     public void FetchContent(LapTimes lapTime);
 }
 
-public class CsvParser : IFileParser
+public class CsvParser(IConfiguration config) : IFileParser
 {
-    // todo, make this more flexibles
-    private readonly string LapTimesPath = "/Users/thierry/Desktop/F1-Data-Analysis/F1-Data-Analysis/Kaggle-Data/lap_times.csv";
+    private readonly string? LapTimesPath = config["DataFiles:LapTimes"];
     private readonly int N_LINE_FOR_HEADER = 1;
 
     public void FetchContent(LapTimes lapTime)
     {
-        var nLines = File.ReadLines(LapTimesPath).Count();
+        // verify if LapTimesPath exists
+        if (LapTimesPath == null) return;
+
+        var nLines = File.ReadLines(LapTimesPath!).Count();
         lapTime.Init(nLines - N_LINE_FOR_HEADER);
 
         var lineIndex = 0;

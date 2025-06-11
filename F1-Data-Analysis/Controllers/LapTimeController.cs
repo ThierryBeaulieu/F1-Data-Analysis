@@ -36,7 +36,8 @@ namespace backend.Controllers
             {
                 LapTimes lapTimes = new();
                 _service.FetchContent(lapTimes);
-                return Ok(lapTimes);
+                LapTime? lapTime = lapTimes.GetLapTimeByIndex(0);
+                return Ok(lapTime);
             }
             catch (Exception ex)
             {

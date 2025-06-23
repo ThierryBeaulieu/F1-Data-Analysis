@@ -15,8 +15,9 @@ public class CsvParserBenchmark
         var config = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
-                { "DataFiles:LapTimes", "path/to/laptimes.csv" }
+                { "DataFiles:LapTimes", "lap_times.csv" }
             })
+
             .Build();
 
         _parser = new CsvParser(config);

@@ -12,6 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="lap_times.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../F1-Data-Analysis/F1-Data-Analysis.csproj" />
   </ItemGroup>
 

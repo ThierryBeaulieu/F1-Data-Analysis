@@ -1,21 +1,32 @@
 using BenchmarkDotNet.Attributes;
 using F1_Data_Analysis.Models;
+using Microsoft.Extensions.Configuration;
 using Models;
 
-public class MyBenchmark()
+[MemoryDiagnoser]
+public class CsvParserBenchmark
 {
-    private CsvParser _csvParser;
+    private IFileParser _parser = null!;
+    private LapTimes _lapTimes = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        _csvParser = new CsvParser();
+        var config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                { "DataFiles:LapTimes", "path/to/laptimes.csv" }
+            })
+            .Build();
+
+        _parser = new CsvParser(config);
+
+        _lapTimes = new LapTimes();
     }
 
     [Benchmark]
-    public void RunImportantMethod()
+    public void Benchmark_FetchContent()
     {
-        LapTimes lapTimes = new();
-        _csvParser.FetchContent(lapTimes);
+        _parser.FetchContent(_lapTimes);
     }
 }

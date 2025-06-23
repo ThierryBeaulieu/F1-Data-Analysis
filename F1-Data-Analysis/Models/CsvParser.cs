@@ -13,7 +13,6 @@ public class CsvParser(IConfiguration config) : IFileParser
 {
     private readonly string? LapTimesPath = config["DataFiles:LapTimes"];
     private readonly int N_LINE_FOR_HEADER = 1;
-
     public void FetchContent(LapTimes lapTime)
     {
         // verify if LapTimesPath exists

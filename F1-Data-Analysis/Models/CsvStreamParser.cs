@@ -10,24 +10,34 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
     {
         if (_lapTimesPath is null || !File.Exists(_lapTimesPath)) return;
 
+        var nLines = File.ReadLines(_lapTimesPath!).Count();
+        lapTime.Init(nLines - N_LINE_FOR_HEADER);
+
         using var reader = new StreamReader(_lapTimesPath);
         var lineCount = 0;
+        var headerRead = false;
 
         while (!reader.EndOfStream)
         {
             string? line = reader.ReadLine();
             if (line == null) continue;
+            if (!headerRead)
+            {
+                headerRead = true;
+                continue;
+            }
 
             lineCount++;
             if (lineCount <= N_LINE_FOR_HEADER) continue;
 
             ReadOnlySpan<char> lineSpan = line.AsSpan();
-            var result = SplitByComma(lineSpan);
+            lapTime.Add(lineCount, SplitByComma(lineSpan));
         }
     }
 
-    public IEnumerable<ReadOnlySpan<char>> SplitByComma(ReadOnlySpan<char> line)
+    public string[] SplitByComma(ReadOnlySpan<char> line)
     {
+        var parts = new List<string>();
         int start = 0;
 
         while (true)
@@ -37,12 +47,14 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
             if (index == -1)
             {
                 // Last segment
-                yield return line.Slice(start);
-                yield break;
+                parts.Add(line.Slice(start).ToString());
+                break;
             }
 
-            yield return line.Slice(start, index);
+            parts.Add(line.Slice(start, index).ToString());
             start += index + 1; // move past the comma
         }
+
+        return parts.ToArray();
     }
 }

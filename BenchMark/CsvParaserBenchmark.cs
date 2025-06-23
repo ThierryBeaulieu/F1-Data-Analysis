@@ -7,7 +7,7 @@ using Models;
 public class CsvParserBenchmark
 {
     private IFileParser _parser = null!;
-    private LapTimes _lapTimes = null!;
+    private IFileParser _parserStream = null!;
 
     [GlobalSetup]
     public void Setup()
@@ -21,13 +21,21 @@ public class CsvParserBenchmark
             .Build();
 
         _parser = new CsvParser(config);
+        _parserStream = new CsvStreamParser(config);
 
-        _lapTimes = new LapTimes();
+    }
+
+    [Benchmark(Baseline = true)]
+    public void Benchmark_FetchContent()
+    {
+        var lapTime = new LapTimes();
+        _parser.FetchContent(lapTime);
     }
 
     [Benchmark]
-    public void Benchmark_FetchContent()
+    public void Benchmark_Stream_FetchContent()
     {
-        _parser.FetchContent(_lapTimes);
+        var lapTime = new LapTimes();
+        _parserStream.FetchContent(lapTime);
     }
 }

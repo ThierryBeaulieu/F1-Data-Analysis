@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IFileParser, CsvParser>();
+builder.Services.AddScoped<IFileParser, CsvStreamParser>();
 builder.Services.AddScoped<IDatabaseService, FileService>();
 
 var app = builder.Build();

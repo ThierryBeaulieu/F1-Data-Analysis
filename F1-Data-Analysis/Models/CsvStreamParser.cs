@@ -16,8 +16,8 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
     public async Task<LapTime[]> FetchContent()
     {
         if (_lapTimesPath is null || !File.Exists(_lapTimesPath)) return [];
-        ;
-        var lapTimes = new LapTime[60000];
+
+        var lapTimes = new LapTime[590000];
         var position = 0;
 
         using var stream = File.OpenRead(_lapTimesPath!);

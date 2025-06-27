@@ -28,14 +28,14 @@ public class CsvParserBenchmark
     [Benchmark(Baseline = true)]
     public void Benchmark_FetchContent()
     {
-        var lapTime = new LapTimes();
-        _parser.FetchContent(lapTime);
+        LapTime[] lapTimes = [];
+        _parser.FetchContent(lapTimes);
     }
 
     [Benchmark]
     public void Benchmark_Stream_FetchContent()
     {
-        var lapTime = new LapTimes();
-        _parserStream.FetchContent(lapTime);
+        LapTime[] lapTimes = [];
+        _parserStream.FetchContent(lapTimes);
     }
 }

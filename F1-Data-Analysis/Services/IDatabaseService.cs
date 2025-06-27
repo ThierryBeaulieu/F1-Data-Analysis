@@ -2,5 +2,5 @@ using Models;
 
 public interface IDatabaseService
 {
-    public void FetchContent(LapTime[] lapTimes);
+    public Task<LapTime[]> FetchContent();
 }

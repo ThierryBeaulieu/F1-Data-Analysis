@@ -11,14 +11,13 @@ namespace F1_Data_Analysis.Models;
 
 public class CsvStreamParser(IConfiguration config) : IFileParser
 {
-
     public static ReadOnlySpan<byte> NewLine => "\r\n"u8;
     private readonly string? _lapTimesPath = config["DataFiles:LapTimes"];
-    private readonly int N_LINE_FOR_HEADER = 1;
-    public async Task FetchContent(LapTime[] lapTimes)
+    public async Task<LapTime[]> FetchContent()
     {
-        if (_lapTimesPath is null || !File.Exists(_lapTimesPath)) return;
-
+        if (_lapTimesPath is null || !File.Exists(_lapTimesPath)) return [];
+        ;
+        var lapTimes = new LapTime[60000];
         var position = 0;
 
         using var stream = File.OpenRead(_lapTimesPath!);
@@ -39,6 +38,8 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
         }
 
         pipeReader.Complete();
+
+        return lapTimes;
 
     }
 

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using F1_Data_Analysis.Models;
 using Microsoft.Extensions.Configuration;
@@ -26,16 +27,16 @@ public class CsvParserBenchmark
     }
 
     [Benchmark(Baseline = true)]
-    public void Benchmark_FetchContent()
+    public async Task Benchmark_FetchContent()
     {
         LapTime[] lapTimes = [];
-        _parser.FetchContent(lapTimes);
+        await _parser.FetchContent();
     }
 
     [Benchmark]
-    public void Benchmark_Stream_FetchContent()
+    public async Task Benchmark_Stream_FetchContent()
     {
         LapTime[] lapTimes = [];
-        _parserStream.FetchContent(lapTimes);
+        await _parserStream.FetchContent();
     }
 }

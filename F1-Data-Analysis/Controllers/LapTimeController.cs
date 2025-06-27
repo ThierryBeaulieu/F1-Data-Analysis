@@ -30,12 +30,11 @@ namespace backend.Controllers
         /// or 500 Internal Server Error if an exception occurs.
         /// </returns>
         [HttpGet]
-        public IActionResult GetAllLapTimes()
+        public async Task<IActionResult> GetAllLapTimes()
         {
             try
             {
-                LapTime[] lapTimes = [];
-                _service.FetchContent(lapTimes);
+                LapTime[] lapTimes = await _service.FetchContent();
                 LapTime? lapTime = lapTimes[0];
                 return Ok(lapTime);
             }

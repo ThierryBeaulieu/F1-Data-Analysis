@@ -7,34 +7,34 @@ namespace F1_Data_Analysis.Models;
 
 public interface IFileParser
 {
-    public Task FetchContent(LapTime[] lapTime);
+    public Task<LapTime[]> FetchContent();
 }
 
 public class CsvParser(IConfiguration config) : IFileParser
 {
     private readonly string? LapTimesPath = config["DataFiles:LapTimes"];
     private readonly int N_LINE_FOR_HEADER = 1;
-    public Task FetchContent(LapTime[] lapTime)
+    public Task<LapTime[]> FetchContent()
     {
         // verify if LapTimesPath exists
-        if (LapTimesPath == null) return Task.CompletedTask;
+        if (LapTimesPath == null) Task.FromResult(Array.Empty<LapTime>());
 
         var nLines = File.ReadLines(LapTimesPath!).Count();
-        lapTime = new LapTime[nLines - N_LINE_FOR_HEADER];
+        var lapTimes = new LapTime[nLines - N_LINE_FOR_HEADER];
 
         var lineIndex = 0;
         var isHeaderSkipped = false;
-        foreach (var line in File.ReadLines(LapTimesPath))
+        foreach (var line in File.ReadLines(LapTimesPath!))
         {
             if (!isHeaderSkipped)
             {
                 isHeaderSkipped = true;
                 continue;
             }
-            lapTime[lineIndex] = LineParser.ParseLine(line);
+            lapTimes[lineIndex] = LineParser.ParseLine(line);
             lineIndex++;
         }
-        return Task.CompletedTask;
+        return Task.FromResult(lapTimes);
     }
 
     public static class LineParser

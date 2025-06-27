@@ -18,7 +18,6 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
     {
         if (_lapTimesPath is null || !File.Exists(_lapTimesPath)) return [];
 
-
         var nLines = File.ReadLines(_lapTimesPath!).Count();
         var lapTimes = new LapTime[nLines - N_LINE_FOR_HEADER];
         var position = 0;
@@ -43,7 +42,6 @@ public class CsvStreamParser(IConfiguration config) : IFileParser
         pipeReader.Complete();
 
         return lapTimes;
-
     }
 
     private SequencePosition ParseLines(LapTime[] lapTimes, ref ReadOnlySequence<byte> buffer, ref int position, ref bool headerRead)
